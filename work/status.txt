@@ -1,0 +1,8 @@
+ETUDIES:
+- exposees/AdHoc_Presentation.pdf (Romain)
+- exposees/ReseauxAdHoc.pdf (Romain)
+
+EN COURS:
+- exposees/dsr/draft-ietf-manet-dsr-10.txt (Romain)
+- exposees/dsr/Dynamic%20Source%20Routing%20Intro.pdf (Romain)
+- exposees/dsr/DSRreadme.pdf
