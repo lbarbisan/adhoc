@@ -1,0 +1,3 @@
+http://www.cs.virginia.edu/~cl7v/cs851-papers/dsdv-sigcomm94.pdf
+http://wiki.uni.lu/secan-lab/Highly+Dynamic+Destination-Sequenced+Distance-Vector+Routing.html
+www.daimi.au.dk/CPnets/workshop05/cpn/slides/CYuan.ppt
