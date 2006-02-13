@@ -1,0 +1,12 @@
+Création de scenario
+Création un modèle de traffic
+
+	Délais d'acheminement 
+	Débit
+	charge de routage
+	evolution de nombre de station
+
+
+
+Nombre de machine 				10 puis 100
+Espacement entre les machine	10 puis 100
