@@ -55,16 +55,16 @@ set opt(cp)		"./mobility/scene/cbr-3-test"
 set opt(sc)		"./mobility/scene/scen-3-test"
 
 set opt(ifqlen)		50		;# max packet in ifq
-set opt(nn)		20		;# number of nodes
+set opt(nn)		3		;# number of nodes
 set opt(seed)		0.0
-set opt(stop)		200.0		;# simulation time
+set opt(stop)		2000.0		;# simulation time
 set opt(tr)		out-test.tr		;# trace file
 set opt(rp)             dsr          ;# routing protocol script
 set opt(lm)             "off"           ;# log movement
 
 # ======================================================================
 
-set AgentTrace			OFF
+set AgentTrace			ON
 set RouterTrace			ON
 set MacTrace			OFF
 
@@ -184,7 +184,7 @@ getopt $argc $argv
 source ./lib/ns-mobilenode.tcl
 
 #if { $opt(rp) != "" } {
-#	source ./mobility/$opt(rp).tcl
+	source ./mobility/$opt(rp).tcl
 	#} elseif { [catch { set env(NS_PROTO_SCRIPT) } ] == 1 } {
 	#puts "\nenvironment variable NS_PROTO_SCRIPT not set!\n"
 	#exit
@@ -222,8 +222,6 @@ set f [open trace-out-test.tr w]
 $ns_ namtrace-all-wireless $nf $opt(x) $opt(y)
 $ns_ trace-all $f
 
-$ns_ use-newtrace
-
 $topo load_flatgrid $opt(x) $opt(y)
 
 $prop topography $topo
@@ -249,25 +247,14 @@ if { $opt(lm) == "on" } {
 #  array global $node_($i)
 #
 
-$ns_ node-config -adhocRouting string toupper $opt(rp) \
-		-llType $opt(ll) \
-		-macType $opt(mac) \
-		-ifqType $opt(ifq) \
-		-ifqLen $opt(ifqlen) \
-		-antType $opt(ant) \
-		-propType $opt(prop) \
-		-phyType $opt(netif) \
-		-channel [new $opt(chan)] \
-		-topoInstance $topo \
-		-agentTrace ON \
-		-routerTrace ON \
-		-macTrace OFF \
-		-toraDebug OFF \
-		-movementTrace OFF
-
-for {set i 0} {$i < $opt(nn) } {incr i} {
-	set node_($i) [$ns_ node]
-	$node_($i) random-motion 0              ;# disable random motion
+if { [string compare $opt(rp) "dsr"] == 0} { 
+	for {set i 0} {$i < $opt(nn) } {incr i} {
+		dsr-create-mobile-node $i
+	}
+} elseif { [string compare $opt(rp) "dsdv"] == 0} { 
+	for {set i 0} {$i < $opt(nn) } {incr i} {
+		dsdv-create-mobile-node $i
+	}
 }
 
 #enable node trace in nam
@@ -291,12 +278,7 @@ if { $opt(cp) == "" } {
 
 
 
-proc stop {} {
-    global ns_ f nf
-    $ns_ flush-trace
-    close $f
-    close $nf
-}
+
 
 #
 # Tell all the nodes when the simulation ends
@@ -323,4 +305,9 @@ puts $tracefd "M 0.0 prop $opt(prop) ant $opt(ant)"
 puts "Starting Simulation..."
 $ns_ run
 
-
+proc stop {} {
+    global ns_ f nf
+    $ns_ flush-trace
+    close $f
+    close $nf
+}
