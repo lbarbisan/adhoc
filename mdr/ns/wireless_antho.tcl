@@ -112,6 +112,7 @@ if {$opt(seed) > 0} {
 # Initialize Global Variables
 #
 set ns_		[new Simulator]
+$ns_ use-newtrace
 set tracefd     [open $opt(tr) w]
 $ns_ trace-all $tracefd
 
@@ -160,10 +161,10 @@ if { $opt(lm) == "on" } {
 	}
 
 
-	puts "Loading connection pattern..."
+	puts "Loading connection pattern '$opt(cp)'..."
 	source $opt(cp)
 	
-	puts "Loading scenario file..."
+	puts "Loading scenario file '$opt(sc)'..."
 	source $opt(sc)
 	puts "Load complete..."
 
