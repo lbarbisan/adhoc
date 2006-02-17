@@ -22,16 +22,17 @@ set ns_ [new Simulator]
 
 set opt(chan) 	Channel/WirelessChannel
 set opt(prop) 	Propagation/TwoRayGround
+set opt(seed)	0
 set opt(netif)	Phy/WirelessPhy
 set opt(mac) 	Mac/802_11
 set opt(ifq) 	Queue/DropTail/PriQueue
 set opt(ll) 	LL
 set opt(ant) 	Antenna/OmniAntenna
-set opt(ifqlen) 25 ;#
+set opt(ifqlen) 50 ;#
 set opt(nn)  	25  ;# nb mobiles
 set opt(adhocRouting) 	DSR
-set opt(x) 		[expr $opt(nn) *100.0 + 100.0]
-set opt(y) 		1000
+set opt(x) 		500
+set opt(y) 		500
 set opt(cp)		"./mobility/scene/cbr-3-test"
 set opt(sc)		"./mobility/scene/scen-3-test"
 set opt(stop) 	100
@@ -54,8 +55,8 @@ $ns_ use-newtrace
 set tracefd [open $dirName/unicast.tr w]
 $ns_ trace-all $tracefd
 
-set namtrace [open $dirName/unicast.nam w]
-$ns_ namtrace-all-wireless $namtrace $opt(x) $opt(y)
+#set namtrace [open $dirName/unicast.nam w]
+#$ns_ namtrace-all-wireless $namtrace $opt(x) $opt(y)
 
 #---------------------------------------------------------------------------
 # Create node configuration
@@ -81,7 +82,7 @@ $ns_ node-config -adhocRouting $opt(adhocRouting) \
 for {set i 0} {$i < $opt(nn)} {incr i} {
     set node_($i) [$ns_ node]
     $node_($i) random-motion 0
-    $ns_ initial_node_pos $node_($i) 
+    $ns_ initial_node_pos $node_($i)  $i*10
 }
 
 #---------------------------------------------------------------------------
@@ -125,16 +126,11 @@ proc getopt {argc argv} {
 	}
 }
 
-source $opt(cp)
-source $opt(sc)
-
 #---------------------------------------------------------------------------
 # Finishing procedure
 #---------------------------------------------------------------------------
 
 proc finishSimulation { } {
-    global ns_ node_ val dirName
-
     # Exit
     puts "Finished simulation."
     $ns_ halt
@@ -146,14 +142,23 @@ proc finishSimulation { } {
 
 proc runSimulation {duration} {
     global ns_ finishSimulation
-    for {set j 1.0} {$j < $duration} {set j [expr $j + 1]} {
-	$ns_ at $j "puts t=$j"
+    for {set j 1} {$j < $duration} {incr j} {
+		$ns_ at $j "puts -nonewline \"#\" ; flush stdout"
+		if { ($j%100)==0 } {
+			$ns_ at $j "puts $j"
+		}
     }
     $ns_ at $duration "finishSimulation"
     $ns_ run
 }
 
+ns-random $opt(seed)
+
+source $opt(cp)
+source $opt(sc)
+
 getopt $argc $argv
+
 runSimulation $opt(stop)
 
 #---------------------------------------------------------------------------

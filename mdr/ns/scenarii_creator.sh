@@ -34,6 +34,6 @@ ns $NS_HOME/indep-utils/cmu-scen-gen/cbrgen.tcl -type cbr -nn $(($NN - 1)) -seed
 #ns $NS_HOME/indep-utils/cmu-scen-gen/cbrgen.tcl -type cbr -nn $NN -seed 1 -mc $MC -rate $RATE > $CBR_FILE
 fi
 
-$NTR_HOME/mdr/ns/wireless_last.tcl -x $X -y $Y -cp $CBR_FILE -sc $SCENE_FILE -nn $NN -stop $T -adhocRouting $PROTO
+$NTR_HOME/mdr/ns/$TCL_FILE -x $X -y $Y -cp $CBR_FILE -sc $SCENE_FILE -nn $NN -stop $T -adhocRouting $PROTO
 
 
