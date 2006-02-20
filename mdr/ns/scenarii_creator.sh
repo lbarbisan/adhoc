@@ -19,8 +19,12 @@ MC=$5
 RATE=$6
 PROTO=$7
 PAUSE=$8
+# Vitesse max en m/s
+MAX_SPEED=20
+# Buffer d'envoi en nombre de paquets
+IFQ_LEN=64
 
-SCENE_FILE=$NTR_HOME/mdr/ns/mobility/scene/scen-n$NN-p$PAUSE-M20-t$T-${X}x${Y}.tcl
+SCENE_FILE=$NTR_HOME/mdr/ns/mobility/scene/scen-n$NN-p$PAUSE-M${MAX_SPEED}-t$T-${X}x${Y}.tcl
 CBR_FILE=$NTR_HOME/mdr/ns/mobility/scene/cbr-n$(($NN - 1))-s1-m$MC-r$RATE.tcl
 #CBR_FILE=$NTR_HOME/mdr/ns/mobility/scene/cbr-n$NN-s1-m$MC-r$RATE.tcl
 TR_FILE=results/scenario_${PROTO}_${NN}_${MC}_${PAUSE}.tr
@@ -38,5 +42,5 @@ ns $NS_HOME/indep-utils/cmu-scen-gen/cbrgen.tcl -type cbr -nn $(($NN - 1)) -seed
 fi
 
 #$NTR_HOME/mdr/ns/wireless_antho.tcl -x $X -y $Y -cp $CBR_FILE -sc $SCENE_FILE -nn $NN -stop $T -adhocRouting $PROTO
-$NTR_HOME/mdr/ns/$TCL_FILE -x $X -y $Y -cp $CBR_FILE -sc $SCENE_FILE -nn $NN -stop $T -adhocRouting $PROTO -tr $TR_FILE -nam $NAM_FILE
+$NTR_HOME/mdr/ns/$TCL_FILE -x $X -y $Y -cp $CBR_FILE -sc $SCENE_FILE -nn $NN -stop $T -adhocRouting $PROTO -tr $TR_FILE -nam $NAM_FILE -ifqlen $IFQ_LEN
 
