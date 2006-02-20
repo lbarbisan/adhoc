@@ -29,7 +29,9 @@ BEGIN{
 }
 
 END{  
-	print "Nombre de trame de routage : " (DSRPacket + AODVPacket)
-	print "Nombre de trame de données : " (receivePacket +forwardPacket + sendPacket)
-	print "Ratio :" (DSRPacket + AODVPacket)/(receivePacket +forwardPacket + sendPacket);
+	ratio = (DSRPacket + AODVPacket)/(receivePacket +forwardPacket + sendPacket);
+	print "Nombre de trame de routage : " (DSRPacket + AODVPacket) > "/dev/stderr";
+	print "Nombre de trame de données : " (receivePacket +forwardPacket + sendPacket) > "/dev/stderr";
+	print "Ratio :" ratio > "/dev/stderr";
+	print ratio;
 }

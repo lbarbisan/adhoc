@@ -19,10 +19,12 @@ forwardPacket = 0
 }
 
 END{  
-	print "Drop packets : " dropPacket ;
-	print "Send packets : " sendPacket ; 
-	print "Receive packet : " receivePacket ;  
-	print "Forward packet : " forwardPacket ;
-	print "Ratio :" receivePacket/(sendPacket + forwardPacket) * 100;
+	ratio =  receivePacket/(sendPacket + forwardPacket) * 100 	
+	print "Drop packets : " dropPacket > "/dev/stderr" ;
+	print "Send packets : " sendPacket > "/dev/stderr" ; 
+	print "Receive packets : " receivePacket > "/dev/stderr"  ;  
+	print "Forward packets : " forwardPacket > "/dev/stderr" ;
+	print "Ratio : " ratio > "/dev/stderr" ;
+	print ratio
 }
 
