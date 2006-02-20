@@ -116,13 +116,17 @@ set ns_		[new Simulator]
 #$ns_ use-newtrace
 set tracefd     [open $opt(tr) w]
 $ns_ trace-all $tracefd
-set namtrace [open $opt(nam) w]
-$ns_ namtrace-all-wireless $namtrace $opt(x) $opt(y)
+#set namtrace [open $opt(nam) w]
+#$ns_ namtrace-all-wireless $namtrace $opt(x) $opt(y)
 
 # set up topography object
 set topo       [new Topography]
 
+#set opt(x) [expr $opt(x)+500]
+#set opt(y) [expr $opt(y)+500]
+
 $topo load_flatgrid $opt(x) $opt(y)
+puts "Flatgrid $opt(x)x$opt(y)\n"
 
 #
 # Create God
@@ -142,6 +146,11 @@ if { $opt(lm) == "on" } {
 #  Here two nodes are created : node(0) and node(1)
 
 # configure node
+# If the protocol is DSR, must give a CMUPriQueue instead of Queue/DropTail/PriQueue
+if { $opt(adhocRouting) == "DSR" } {
+	set opt(ifq) CMUPriQueue
+}
+
 
         $ns_ node-config -adhocRouting $opt(adhocRouting) \
 			 -llType $opt(ll) \
@@ -161,7 +170,7 @@ if { $opt(lm) == "on" } {
 	for {set i 0} {$i < $opt(nn) } {incr i} {
 		set node_($i) [$ns_ node]	
 		$node_($i) random-motion 0		;# disable random motion
-    $ns_ initial_node_pos $node_($i)  $i*10
+#    $ns_ initial_node_pos $node_($i)  $i*10
 	}
 
 
