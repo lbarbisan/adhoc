@@ -144,7 +144,7 @@ proc runSimulation {duration} {
     global ns_ finishSimulation
     for {set j 1} {$j < $duration} {incr j} {
 		$ns_ at $j "puts -nonewline \"#\" ; flush stdout"
-		if { ($j%100)==0 } {
+		if {$j%100==0 } {
 			$ns_ at $j "puts $j"
 		}
     }
@@ -154,10 +154,10 @@ proc runSimulation {duration} {
 
 ns-random $opt(seed)
 
+getopt $argc $argv
 source $opt(cp)
 source $opt(sc)
 
-getopt $argc $argv
 
 runSimulation $opt(stop)
 
