@@ -5,9 +5,9 @@ set -x
 #NS_HOME=~/src/ns-allinone-2.29/ns-2.29
 #NTR_HOME=~/projets/adhoc
 
-if [ $# != 7 ]
+if [ $# != 8 ]
 then
-echo "$0 <nn> <t> <x> <y> <mc> <rate> <proto>"
+echo "$0 <nn> <t> <x> <y> <mc> <rate> <proto> <pause>"
 exit
 fi
 
@@ -18,16 +18,17 @@ Y=$4
 MC=$5
 RATE=$6
 PROTO=$7
+PAUSE=$8
 
-SCENE_FILE=$NTR_HOME/mdr/ns/mobility/scene/scen-n$NN-p0-M20-t$T-${X}x${Y}.tcl
+SCENE_FILE=$NTR_HOME/mdr/ns/mobility/scene/scen-n$NN-p$PAUSE-M20-t$T-${X}x${Y}.tcl
 CBR_FILE=$NTR_HOME/mdr/ns/mobility/scene/cbr-n$(($NN - 1))-s1-m$MC-r$RATE.tcl
 #CBR_FILE=$NTR_HOME/mdr/ns/mobility/scene/cbr-n$NN-s1-m$MC-r$RATE.tcl
-TR_FILE=scenario_${PROTO}_$NN.tr
-NAM_FILE=scenario_${PROTO}_$NN.nam
+TR_FILE=results/scenario_${PROTO}_${NN}_${MC}_${PAUSE}.tr
+NAM_FILE=results/scenario_${PROTO}_${NN}_${MC}_${PAUSE}.nam
 
 if [ ! -r $SCENE_FILE ]
 then
-$NS_HOME/indep-utils/cmu-scen-gen/setdest/setdest -v 1 -n $NN -p 0 -M 20 -t $T -x $X -y $Y > $SCENE_FILE
+$NS_HOME/indep-utils/cmu-scen-gen/setdest/setdest -v 1 -n $NN -p $PAUSE -M 20 -t $T -x $X -y $Y > $SCENE_FILE
 fi
 
 if [ ! -r $CBR_FILE ]

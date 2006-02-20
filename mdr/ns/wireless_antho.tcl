@@ -43,7 +43,7 @@ set opt(mac)            Mac/802_11			;# MAC type
 set opt(ifq)            Queue/DropTail/PriQueue		;# interface queue type
 set opt(ll)             LL				;# link layer type
 set opt(ant)            Antenna/OmniAntenna		;# antenna model
-set opt(ifqlen)         50				;# max packet in ifq
+set opt(ifqlen)         64				;# max packet in ifq
 set opt(nn)             2				;# number of mobilenodes
 set opt(adhocRouting)	DSDV				;# routing protocol
 
