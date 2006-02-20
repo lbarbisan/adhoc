@@ -113,7 +113,7 @@ if {$opt(seed) > 0} {
 # Initialize Global Variables
 #
 set ns_		[new Simulator]
-#$ns_ use-newtrace
+$ns_ use-newtrace
 set tracefd     [open $opt(tr) w]
 $ns_ trace-all $tracefd
 #set namtrace [open $opt(nam) w]

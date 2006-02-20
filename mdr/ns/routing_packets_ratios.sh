@@ -10,7 +10,7 @@ BEGIN{
 
 {
 
-	if($7=="cbr" || ($2=="-t" && $33=="cbr"))
+	if($7=="cbr" || ($2=="-t" && $35=="cbr"))
 
 	{    
 		if($1 == "d"){dropPacket++;}	
@@ -18,11 +18,11 @@ BEGIN{
 		else if($1 == "s"){receivePacket++;}
 		else if($1 == "f"){forwardPacket++;}
 	}
-	else if($7=="AODV" || ($2=="-t" && $31=="AODV"))	#OldTrace or #NewTrace
+	else if($7=="AODV" || ($2=="-t" && $35=="AODV"))	#OldTrace or #NewTrace
 	{
 		AODVPacket++
 	}
-	else if($7=="DSR" || ($2=="-t" && $31=="DSR"))		#OldTrace or #NewTrace
+	else if($7=="DSR" || ($2=="-t" && $35=="DSR"))		#OldTrace or #NewTrace
 	{
 		DSRPacket++
 	}

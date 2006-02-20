@@ -8,7 +8,7 @@ forwardPacket = 0
 }
 
 {
-	if($7=="cbr" || ($2=="-t" && $33=="cbr"))	#OldVersion  or #NewTrace
+	if($7=="cbr" || ($2=="-t" && $35=="cbr"))	#OldVersion  or #NewTrace
 	
 	{    
 		if($1 == "d"){dropPacket++;}	

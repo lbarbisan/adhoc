@@ -29,6 +29,8 @@ CBR_FILE=$NTR_HOME/mdr/ns/mobility/scene/cbr-n$(($NN - 1))-s1-m$MC-r$RATE.tcl
 #CBR_FILE=$NTR_HOME/mdr/ns/mobility/scene/cbr-n$NN-s1-m$MC-r$RATE.tcl
 TR_FILE=results/scenario_${PROTO}_${NN}_${MC}_${PAUSE}.tr
 NAM_FILE=results/scenario_${PROTO}_${NN}_${MC}_${PAUSE}.nam
+DROP_PACKET_FILE=results/droppacket_${PROTO}_${NN}_${MC}.plot
+ROUTING_PACKET_RATION_FILE=results/routing_ratio_${PROTO}_${NN}_${MC}.plot
 
 if [ ! -r $SCENE_FILE ]
 then
