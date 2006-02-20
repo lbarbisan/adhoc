@@ -22,6 +22,8 @@ PROTO=$7
 SCENE_FILE=$NTR_HOME/mdr/ns/mobility/scene/scen-n$NN-p0-M20-t$T-${X}x${Y}.tcl
 CBR_FILE=$NTR_HOME/mdr/ns/mobility/scene/cbr-n$(($NN - 1))-s1-m$MC-r$RATE.tcl
 #CBR_FILE=$NTR_HOME/mdr/ns/mobility/scene/cbr-n$NN-s1-m$MC-r$RATE.tcl
+TR_FILE=scenario_${PROTO}_$NN.tr
+NAM_FILE=scenario_${PROTO}_$NN.nam
 
 if [ ! -r $SCENE_FILE ]
 then
@@ -35,5 +37,5 @@ ns $NS_HOME/indep-utils/cmu-scen-gen/cbrgen.tcl -type cbr -nn $(($NN - 1)) -seed
 fi
 
 #$NTR_HOME/mdr/ns/wireless_antho.tcl -x $X -y $Y -cp $CBR_FILE -sc $SCENE_FILE -nn $NN -stop $T -adhocRouting $PROTO
-$NTR_HOME/mdr/ns/$TCL_FILE -x $X -y $Y -cp $CBR_FILE -sc $SCENE_FILE -nn $NN -stop $T -adhocRouting $PROTO
+$NTR_HOME/mdr/ns/$TCL_FILE -x $X -y $Y -cp $CBR_FILE -sc $SCENE_FILE -nn $NN -stop $T -adhocRouting $PROTO -tr $TR_FILE -nam $NAM_FILE
 

@@ -51,6 +51,7 @@ set opt(x)		500				;# with of the flatgrid
 set opt(y)		500				;# height of the flatgrid
 set opt(seed)		0.0
 set opt(tr)		"simple-wireless.tr"		;# trace file
+set opt(nam)		"simple-wireless.nam"		;# nam trace file
 set opt(lm)		"off"				;# log movement
 set opt(stop)		900				;# simulation time in ms
 
@@ -112,9 +113,11 @@ if {$opt(seed) > 0} {
 # Initialize Global Variables
 #
 set ns_		[new Simulator]
-$ns_ use-newtrace
+#$ns_ use-newtrace
 set tracefd     [open $opt(tr) w]
 $ns_ trace-all $tracefd
+set namtrace [open $opt(nam) w]
+$ns_ namtrace-all-wireless $namtrace $opt(x) $opt(y)
 
 # set up topography object
 set topo       [new Topography]
@@ -158,6 +161,7 @@ if { $opt(lm) == "on" } {
 	for {set i 0} {$i < $opt(nn) } {incr i} {
 		set node_($i) [$ns_ node]	
 		$node_($i) random-motion 0		;# disable random motion
+    $ns_ initial_node_pos $node_($i)  $i*10
 	}
 
 
