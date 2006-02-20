@@ -1,0 +1,47 @@
+caractéristiques des stations:
+- débit : 2Mb/s
+- portée : 250m						[OK, par défaut]
+- random location					[OK]
+- random destination					[OK]
+- random speed (0 -> 20 m/s)				[OK]
+- send buffer : 64 packets				[OK]
+
+trafic
+- CBR, 512 byte par paquet				[OK]
+
+paramètres changeants:
+- 2 protocoles
+=> 2 graphs différents
+	DSR
+	AODV
+
+- nombre de noeuds actifs
+=> 4 graphs différents
+	10 noeuds qui transmettent: 4 paquets/s
+	20 noeuds qui transmettent: 4 paquets/s
+	30 noeuds qui transmettent: 4 paquets/s
+	40 noeuds qui transmettent: 3 paquets/s
+
+- nombre de noeuds totaux
+=> 2 graphs différents
+	50 noeuds
+		900 simulated seconds
+		1500m x 300m
+	100 noeuds
+		500 simulated seconds
+		2200m x 600m
+
+- temps de pause (tps d'attente pour une station entre l'arrivée à la destination et le prochain départ)
+=> même graph
+	0s
+	33s
+	66s
+	125s
+	300s
+	600s
+	900s
+
+- paramètres d'analyse
+	paquet delivery fraction (%) => rejets
+	average delay (sec)
+	normalized routing load
