@@ -48,3 +48,11 @@ then
 #$NTR_HOME/mdr/ns/wireless_antho.tcl -x $X -y $Y -cp $CBR_FILE -sc $SCENE_FILE -nn $NN -stop $T -adhocRouting $PROTO
 $NTR_HOME/mdr/ns/$TCL_FILE -x $X -y $Y -cp $CBR_FILE -sc $SCENE_FILE -nn $NN -stop $T -adhocRouting $PROTO -tr $TR_FILE -nam $NAM_FILE -ifqlen $IFQ_LEN
 fi
+
+if [ -r $TR_FILE ]
+then
+echo "$PAUSE `$NTR_HOME/mdr/ns/droppacket.sh $TR_FILE`" >> $DROP_PACKET_FILE
+echo "$PAUSE `$NTR_HOME/mdr/ns/routing_packets_ratios.sh $TR_FILE`" >> $ROUTING_PACKET_RATION_FILE
+rm $TR_FILE
+fi
+
