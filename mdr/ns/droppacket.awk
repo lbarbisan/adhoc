@@ -12,8 +12,8 @@ forwardPacket = 0
 	
 	{    
 		if($1 == "d"){dropPacket++;}	
-		else if($1 == "r"){sendPacket++;}
-		else if($1 == "s"){receivePacket++;}
+		else if($1 == "r"){reveivePacket++;}
+		else if($1 == "s"){sendPacket++;}
 		else if($1 == "f"){forwardPacket++;}
 	}
 }
