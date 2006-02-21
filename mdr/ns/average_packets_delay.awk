@@ -66,8 +66,8 @@
 				start = start_time[packet_id];
 				end = end_time[packet_id];
 				packet_duration = end - start;
-				if ( start < end ) sum= packet_duration+sum;
-#				print "[" ARGV[0] ":average]packet " packet_id " [" end_time[packet_id] "-" start_time[packet_id] "] src:" packet_src[packet_id] " dst:" packet_dest[packet_id] > "/dev/stderr"
+				if ( start < end ) sum = packet_duration+sum;
+				print "[" ARGV[0] ":average]packet " packet_id " [" end_time[packet_id] "-" start_time[packet_id] "] src:" packet_src[packet_id] " dst:" packet_dest[packet_id] > "/dev/stderr"
 			}
 		}
 		delay = sum/nbr_packet;

@@ -9,29 +9,31 @@ BEGIN{
 }
 
 {
+	if($1 == "d"){dropPacket++;}	
+	else if($1 == "r"){receivePacket++;}
+	else if($1 == "s"){sendPacket++;}
+	else if($1 == "f"){forwardPacket++;}
 
-	if($7=="cbr" || ($2=="-t" && $35=="cbr"))
-
-	{    
-		if($1 == "d"){dropPacket++;}	
-		else if($1 == "r"){receivePacket++;}
-		else if($1 == "s"){sendPacket++;}
-		else if($1 == "f"){forwardPacket++;}
-	}
-	else if($7=="AODV" || ($2=="-t" && $35=="AODV"))	#OldTrace or #NewTrace
+	if($7=="AODV" || ($2=="-t" && $35=="AODV"))	#OldTrace or #NewTrace
 	{
-		AODVPacket++
+		if($1=="s" || $1=="f")
+		{
+			AODVPacket++
+		}
 	}
 	else if($7=="DSR" || ($2=="-t" && $35=="DSR"))		#OldTrace or #NewTrace
 	{
-		DSRPacket++
+		if($1=="s" || $1=="f")
+		{
+			DSRPacket++
+		}
 	}
 }
 
 END{  
-	ratio = (DSRPacket + AODVPacket)/(receivePacket +forwardPacket + sendPacket+ DSRPacket + AODVPacket);
+	ratio = ((DSRPacket + AODVPacket)/(forwardPacket + sendPacket))*100;
 	print "Nombre de trame de routage : " (DSRPacket + AODVPacket) > "/dev/stderr";
-	print "Nombre de trame de données : " (receivePacket +forwardPacket + sendPacket) > "/dev/stderr";
+	print "Nombre de trame de données : " (forwardPacket + sendPacket) > "/dev/stderr";
 	print "Ratio :" ratio > "/dev/stderr";
 	print ratio;
 }
