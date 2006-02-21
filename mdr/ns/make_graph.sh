@@ -1,9 +1,10 @@
 #!/bin/sh
 set -x
 
-`./localConfig.sh`
+source ./localConfig.sh
+#TESTS="average_packets_delay droppacket routing_packets_ratios"
 
-for TEST in droppacket;
+for TEST in $TESTS
 do
 for MC in 10 20 30 40;
 do

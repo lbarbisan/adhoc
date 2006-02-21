@@ -1,8 +1,6 @@
 #!/bin/sh
 set -x
 
-#TCL=wireless_01.tcl
-TCL=wireless_antho.tcl
 NN=50
 T=900
 X=1500
@@ -24,12 +22,12 @@ fi
 #fi
 
 
-`./localConfig.sh`
-PROTO=DSR
-for PROTO in DSR AODV;
+source ./localConfig.sh
+
+for PROTO in AODV DSR;
 do
 #NS_HOME=~/src/ns-allinone-2.29/ns-2.29 NTR_HOME=~/projets/adhoc TCL_FILE=$TCL ./scenarii_creator.sh $NN $T $X $Y $MC $RATE $PROTO $PAUSE || echo "`date` $TCL n=$NN t=$T x=$X y=$Y mc=$MC rate=$RATE proto=$PROTO pause=$PAUSE : failed" >> scenarii.errors
 #NS_HOME=$NS_HOME NTR_HOME=$NTR_HOME TCL_FILE=$TCL ./scenarii_creator.sh $NN $T $X $Y $MC $RATE $PROTO $PAUSE || echo "`date` $TCL n=$NN t=$T x=$X y=$Y mc=$MC rate=$RATE proto=$PROTO pause=$PAUSE : failed" >> scenarii.errors
-TCL_FILE=$TCL ./scenarii_creator.sh $NN $T $X $Y $MC $RATE $PROTO $PAUSE || echo "`date` $TCL n=$NN t=$T x=$X y=$Y mc=$MC rate=$RATE proto=$PROTO pause=$PAUSE : failed" >> scenarii.errors
+./scenarii_creator.sh $NN $T $X $Y $MC $RATE $PROTO $PAUSE || echo "`date` $TCL n=$NN t=$T x=$X y=$Y mc=$MC rate=$RATE proto=$PROTO pause=$PAUSE : failed" >> scenarii.errors
 done
  

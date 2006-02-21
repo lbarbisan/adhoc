@@ -24,13 +24,17 @@ MAX_SPEED=20
 # Buffer d'envoi en nombre de paquets
 IFQ_LEN=64
 
+#TESTS="average_packets_delay droppacket routing_packets_ratios"
+source localConfig.sh
+
 SCENE_FILE=$NTR_HOME/mdr/ns/mobility/scene/scen-n$NN-p$PAUSE-M${MAX_SPEED}-t$T-${X}x${Y}.tcl
 CBR_FILE=$NTR_HOME/mdr/ns/mobility/scene/cbr-n$(($NN - 1))-s1-m$MC-r$RATE.tcl
 #CBR_FILE=$NTR_HOME/mdr/ns/mobility/scene/cbr-n$NN-s1-m$MC-r$RATE.tcl
-TR_FILE=results/scenario_${PROTO}_${NN}_${MC}_${PAUSE}.tr
-NAM_FILE=results/scenario_${PROTO}_${NN}_${MC}_${PAUSE}.nam
-DROP_PACKET_FILE=results/droppacket_${PROTO}_${NN}_${MC}.plot
-ROUTING_PACKET_RATION_FILE=results/routing_ratio_${PROTO}_${NN}_${MC}.plot
+TR_FILE=$NTR_HOME/mdr/ns/results/scenario_${PROTO}_${NN}_${MC}_${PAUSE}.tr
+NAM_FILE=$NTR_HOME/mdr/ns/results/scenario_${PROTO}_${NN}_${MC}_${PAUSE}.nam
+#DROP_PACKET_FILE=results/droppacket_${PROTO}_${NN}_${MC}.plot
+#ROUTING_PACKET_RATION_FILE=results/routing_ratio_${PROTO}_${NN}_${MC}.plot
+
 
 if [ ! -r $SCENE_FILE ]
 then
@@ -51,8 +55,12 @@ fi
 
 if [ -r $TR_FILE ]
 then
-echo "$PAUSE `$NTR_HOME/mdr/ns/droppacket.sh $TR_FILE`" >> $DROP_PACKET_FILE
-echo "$PAUSE `$NTR_HOME/mdr/ns/routing_packets_ratios.sh $TR_FILE`" >> $ROUTING_PACKET_RATION_FILE
+for TEST in $TESTS
+do
+echo "$PAUSE `$NTR_HOME/mdr/ns/$TEST.awk $TR_FILE`" >> $NTR_HOME/mdr/ns/results/${TEST}_${PROTO}_${NN}_${MC}.plot
+done
 rm $TR_FILE
+# On recrée le fichier à 0 octets pour se souvenir qu'on l'a déjà traité
+touch $TR_FILE
 fi
 
