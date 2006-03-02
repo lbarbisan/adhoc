@@ -27,11 +27,13 @@ IFQ_LEN=64
 #TESTS="average_packets_delay droppacket routing_packets_ratios"
 source localConfig.sh
 
+RESULTS_DIR=$NTR_HOME/mdr/ns/results
 SCENE_FILE=$NTR_HOME/mdr/ns/mobility/scene/scen-n$NN-p$PAUSE-M${MAX_SPEED}-t$T-${X}x${Y}.tcl
 CBR_FILE=$NTR_HOME/mdr/ns/mobility/scene/cbr-n$(($NN - 1))-s1-m$MC-r$RATE.tcl
 #CBR_FILE=$NTR_HOME/mdr/ns/mobility/scene/cbr-n$NN-s1-m$MC-r$RATE.tcl
-TR_FILE=$NTR_HOME/mdr/ns/results/scenario_${PROTO}_${NN}_${MC}_${PAUSE}.tr
-NAM_FILE=$NTR_HOME/mdr/ns/results/scenario_${PROTO}_${NN}_${MC}_${PAUSE}.nam
+TR_FILE_NAME=scenario_${PROTO}_${NN}_${MC}_${PAUSE}.tr
+TR_FILE=$RESULTS_DIR/$TR_FILE_NAME
+NAM_FILE=$RESULTS_DIR/scenario_${PROTO}_${NN}_${MC}_${PAUSE}.nam
 #DROP_PACKET_FILE=results/droppacket_${PROTO}_${NN}_${MC}.plot
 #ROUTING_PACKET_RATION_FILE=results/routing_ratio_${PROTO}_${NN}_${MC}.plot
 
@@ -47,6 +49,20 @@ ns $NS_HOME/indep-utils/cmu-scen-gen/cbrgen.tcl -type cbr -nn $(($NN - 1)) -seed
 #ns $NS_HOME/indep-utils/cmu-scen-gen/cbrgen.tcl -type cbr -nn $NN -seed 1 -mc $MC -rate $RATE > $CBR_FILE
 fi
 
+if [ -r $TR_FILE ]
+then
+# Le fichier est sûrement une trace "arrêtée en cours de création"
+rm $TR_FILE
+fi
+
+if [ -r $TR_FILE.tgz ]
+then
+CUR_PWD=`pwd`
+cd $RESULTS_DIR
+tar xvzf $TR_FILE_NAME.tgz || ( rm $TR_FILE_NAME.tgz && rm $TR_FILE_NAME )
+cd $CUR_PWD
+fi
+
 if [ ! -r $TR_FILE ]
 then
 #$NTR_HOME/mdr/ns/wireless_antho.tcl -x $X -y $Y -cp $CBR_FILE -sc $SCENE_FILE -nn $NN -stop $T -adhocRouting $PROTO
@@ -57,10 +73,17 @@ if [ -r $TR_FILE ]
 then
 for TEST in $TESTS
 do
-echo "$PAUSE `$NTR_HOME/mdr/ns/$TEST.awk $TR_FILE`" >> $NTR_HOME/mdr/ns/results/${TEST}_${PROTO}_${NN}_${MC}.plot
+echo "$PAUSE `$NTR_HOME/mdr/ns/$TEST.awk $TR_FILE`" >> $RESULTS_DIR/${TEST}_${PROTO}_${NN}_${MC}.plot
 done
+if [ ! -r $TR_FILE.tgz ]
+then
+CUR_PWD=`pwd`
+cd $RESULTS_DIR
+tar cvzf $TR_FILE_NAME.tgz $TR_FILE_NAME
+cd $CUR_PWD
+fi
 rm $TR_FILE
 # On recrée le fichier à 0 octets pour se souvenir qu'on l'a déjà traité
-touch $TR_FILE
+#touch $TR_FILE
 fi
 

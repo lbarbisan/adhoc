@@ -1,3 +1,5 @@
 #!/bin/sh
 set -x
-for p in 0 33 66 125 300 600 900 ; do for mc in 10 20 30 40 ; do ./launch_scenario.sh $mc $p ; done ; done
+source ./localConfig.sh
+rm -rf $NTR_HOME/mdr/ns/results/*.plot
+for MC in $MCS ; do for P in $PAUSE_TIMES ; do ./launch_scenario.sh $MC $P ; done ; done
