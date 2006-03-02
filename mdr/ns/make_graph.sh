@@ -11,7 +11,7 @@ do
 PNG_FILE=${RESULT_FOLDER}/${TEST}_${MC}.png
 case $TEST in
 	average_packets_delay) YLABEL="Delais d acheminement (s)"; YRANGE="0 : 0.5";;
-	droppacket) YLABEL="Pourcentage de paquets perdus (%)"; YRANGE="0 : 100";;
+	droppacket) YLABEL="Pourcentage de paquets perdus (%)"; YRANGE="0 : 10";;
 	routing_packets_ratios) YLABEL="Charge de routage (%)"; YRANGE="0 : 100";;
 esac
 

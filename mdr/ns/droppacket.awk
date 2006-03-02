@@ -12,14 +12,15 @@ forwardPacket = 0
 	
 	{    
 		if($1 == "d"){dropPacket++;}	
-		else if($1 == "r"){reveivePacket++;}
+		else if($1 == "r"){receivePacket++;}
 		else if($1 == "s"){sendPacket++;}
 		else if($1 == "f"){forwardPacket++;}
 	}
 }
 
 END{  
-	ratio =  receivePacket/(sendPacket + forwardPacket) * 100 	
+#	ratio =  receivePacket/(sendPacket + forwardPacket) * 100 	
+	ratio =  dropPacket/sendPacket * 100 	
 	print "Drop packets : " dropPacket > "/dev/stderr" ;
 	print "Send packets : " sendPacket > "/dev/stderr" ; 
 	print "Receive packets : " receivePacket > "/dev/stderr"  ;  
