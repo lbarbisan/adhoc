@@ -24,10 +24,12 @@ fi
 
 source ./localConfig.sh
 
+for NN in 50 100;
+do
 for PROTO in $PROTOS;
 do
 #NS_HOME=~/src/ns-allinone-2.29/ns-2.29 NTR_HOME=~/projets/adhoc TCL_FILE=$TCL ./scenarii_creator.sh $NN $T $X $Y $MC $RATE $PROTO $PAUSE || echo "`date` $TCL n=$NN t=$T x=$X y=$Y mc=$MC rate=$RATE proto=$PROTO pause=$PAUSE : failed" >> scenarii.errors
 #NS_HOME=$NS_HOME NTR_HOME=$NTR_HOME TCL_FILE=$TCL ./scenarii_creator.sh $NN $T $X $Y $MC $RATE $PROTO $PAUSE || echo "`date` $TCL n=$NN t=$T x=$X y=$Y mc=$MC rate=$RATE proto=$PROTO pause=$PAUSE : failed" >> scenarii.errors
 ./scenarii_creator.sh $NN $T $X $Y $MC $RATE $PROTO $PAUSE || echo "`date` $TCL n=$NN t=$T x=$X y=$Y mc=$MC rate=$RATE proto=$PROTO pause=$PAUSE : failed" >> scenarii.errors
 done
- 
+done
